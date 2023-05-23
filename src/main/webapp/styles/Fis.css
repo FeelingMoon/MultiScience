@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+.fis-contain {
+	width: 64%;
+}
+
+.cir-contain {
+	width: 80%;
+}
+
+.responsive-image{
+	max-width: 100%;
+	height: auto;
+}
+
+.dialog-content {
+  max-height: 70vh; /* Ajusta esta altura según tus necesidades */
+  overflow: auto;
+}
+
+.q-input{
+	width: 100%;
+}
+
+.ui-inputtext {
+  min-width: 50px;
+}
