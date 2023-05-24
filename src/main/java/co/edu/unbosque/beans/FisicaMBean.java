@@ -19,7 +19,7 @@ import jakarta.inject.Named;
 public class FisicaMBean implements Serializable{
 
 	private boolean scatter, bar;
-	private String vel, ang, valor, resultado;
+	private String vel, ang, valor, resultado, acel, f1, f2, f3, ang1, ang2, ang3;
 	private ScatterChartModel scatterModel;
 	private FisicaM fis;
 	private String descripcion;
@@ -40,24 +40,50 @@ public class FisicaMBean implements Serializable{
 		bar = true;
 		setResultado("");
 		
-		
 	}
 	
 	public void calcular() {
 		
 		ArrayList<Object> datos = new ArrayList<>();
 		
-		if(valor.equals("parabola")) {	
+		if(valor.equals("parabola")) {
+			try {
 			datos = fis.expParabola(vel, ang);
+			}catch(NumberFormatException e) {
+				showError("Error al intentar realizar la accion, corrija los datos y vuelva a intentarlo.");
+			}
+		} else if(valor.equals("aceleracion")) {
+			try {
+			datos = fis.expAceleracion(acel);
+			}catch(NumberFormatException e) {
+				showError("Error al intentar realizar la accion, corrija los datos y vuelva a intentarlo.");
+			}
+		}else if(valor.equals("fuerzas")) {
+			try {
+			datos = fis.expFuerzas(f1, f2, f3, ang1, ang2, ang3);
+			}catch(NumberFormatException e) {
+				showError("Error al intentar realizar la accion, corrija los datos y vuelva a intentarlo.");
+			}
 		}
 		
 		if (datos != null) {
-			setResultado((String) datos.get(0));
-			scatterModel = (ScatterChartModel) datos.get(1);
+			try {
+			setResultado((String) datos.get(1));
+			scatterModel = (ScatterChartModel) datos.get(0);
+			}catch(IndexOutOfBoundsException e) {
+				
+			}
 		}
 		
-		vel = "";
-		ang = "";
+		acel = "0";
+		vel = "0";
+		ang = "0";
+		f1 = "0";
+		f2 = "0";
+		f3 = "0";
+		ang1 = "0";
+		ang2 = "0";
+		ang3 = "0";
 		
 	}
 
@@ -158,6 +184,62 @@ public class FisicaMBean implements Serializable{
 
 	public void setResultado(String resultado) {
 		this.resultado = resultado;
+	}
+
+	public String getAcel() {
+		return acel;
+	}
+
+	public void setAcel(String acel) {
+		this.acel = acel;
+	}
+
+	public String getF1() {
+		return f1;
+	}
+
+	public void setF1(String f1) {
+		this.f1 = f1;
+	}
+
+	public String getF2() {
+		return f2;
+	}
+
+	public void setF2(String f2) {
+		this.f2 = f2;
+	}
+
+	public String getF3() {
+		return f3;
+	}
+
+	public void setF3(String f3) {
+		this.f3 = f3;
+	}
+
+	public String getAng1() {
+		return ang1;
+	}
+
+	public void setAng1(String ang1) {
+		this.ang1 = ang1;
+	}
+
+	public String getAng2() {
+		return ang2;
+	}
+
+	public void setAng2(String ang2) {
+		this.ang2 = ang2;
+	}
+
+	public String getAng3() {
+		return ang3;
+	}
+
+	public void setAng3(String ang3) {
+		this.ang3 = ang3;
 	}
 	
 }
