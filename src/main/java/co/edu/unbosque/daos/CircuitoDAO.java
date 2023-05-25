@@ -1,5 +1,6 @@
 package co.edu.unbosque.daos;
 
+import co.edu.unbosque.persistence.CapacitoresDTO;
 import co.edu.unbosque.persistence.ResistenciaDTO;
 
 public class CircuitoDAO {
@@ -50,6 +51,7 @@ public class CircuitoDAO {
 			}
 			data += "</ul>";
 		} catch (Exception e) {
+			e.printStackTrace();
 			data = "Error al intentar calcular el circuito de resistencias en paralelo";
 		}
 		return data;
@@ -86,15 +88,96 @@ public class CircuitoDAO {
 			}
 			data += "</ul>";
 		} catch (Exception e) {
+			e.printStackTrace();
 			data = "Error al intentar calcular el circuito de resistencias en paralelo";
 		}
 		return data;
 	}
 
-	private double redondear(double a) {
-		int decimales = 4;
-		double factor = Math.pow(10, decimales);
-		return Math.round(a * factor) / factor;
+	public String calcularResism() {
+		String data = null;
+		try {
+			ResistenciaDTO[] resis = new ResistenciaDTO[4];
+			resis[0] = new ResistenciaDTO();
+			resis[0].setResistencia(Double.parseDouble(a1) * Math.pow(10, Double.parseDouble(u1)));
+			resis[1] = new ResistenciaDTO();
+			resis[1].setResistencia(Double.parseDouble(a2) * Math.pow(10, Double.parseDouble(u2)));
+			resis[2] = new ResistenciaDTO();
+			resis[2].setResistencia(Double.parseDouble(a3) * Math.pow(10, Double.parseDouble(u3)));
+			resis[3] = new ResistenciaDTO();
+			resis[3].setResistencia(Double.parseDouble(a4) * Math.pow(10, Double.parseDouble(u4)));
+			ResistenciaDTO a = new ResistenciaDTO();
+			a.setResistencia(resis[3].getResistencia() + resis[2].getResistencia());
+			ResistenciaDTO b = new ResistenciaDTO();
+			b.setResistencia(Math.pow(((1 / a.getResistencia()) + (1 / resis[1].getResistencia())), -1));
+			ResistenciaDTO req = new ResistenciaDTO();
+			req.setResistencia(b.getResistencia() + resis[0].getResistencia());
+			double v1 = Double.parseDouble(v) * Math.pow(10, Double.parseDouble(uv));
+			req.setVoltaje(v1);
+			req.setCorriente(v1 / req.getResistencia());
+			resis[0].setCorriente(req.getCorriente());
+			resis[0].setVoltaje(resis[0].getCorriente() * resis[0].getResistencia());
+			b.setCorriente(req.getCorriente());
+			b.setVoltaje(b.getCorriente() * b.getResistencia());
+			resis[1].setVoltaje(b.getVoltaje());
+			resis[1].setCorriente(resis[1].getVoltaje() / resis[1].getResistencia());
+			a.setVoltaje(b.getVoltaje());
+			a.setCorriente(a.getVoltaje() / a.getResistencia());
+			resis[2].setCorriente(a.getCorriente());
+			resis[2].setVoltaje(resis[2].getCorriente() * resis[2].getResistencia());
+			resis[3].setCorriente(a.getCorriente());
+			resis[3].setVoltaje(resis[3].getCorriente() * resis[3].getResistencia());
+			data = "El calculo con un voltaje de $" + v1 + "$ $V$ dio como resultado equivalente $R_eq=$ $"
+					+ req.getResistencia() + "$ $\\Omega$, $V_eq=$ $" + v1 + "$ $V$, $I_eq=$ $" + req.getCorriente()
+					+ "$ $A$ y arrojo finalmente los siguiente resultados para cada resistencia:<br><ul class\"list-group\">";
+			for (int i = 0; i < resis.length; i++) {
+				data += "<li class\"list-group-item\">$R_" + (i + 1) + "=$ $" + resis[i].getResistencia()
+						+ "$ $\\Omega$, $V=$ $" + resis[i].getVoltaje() + "$ $V$ y $I=$ $" + resis[i].getCorriente()
+						+ "$ $A$</li>";
+			}
+			data += "</ul>";
+		} catch (Exception e) {
+			e.printStackTrace();
+			data = "Error al intentar calcular el circuito de resistencias mixto";
+		}
+		return data;
+	}
+
+	public String calcularCondSerie() {
+		String data = null;
+		try {
+			double req = 0;
+			CapacitoresDTO[] capacitores = new CapacitoresDTO[4];
+			double[] tmp = new double[4];
+			tmp[0] = Double.parseDouble(a1) * Math.pow(10, Double.parseDouble(u1));
+			tmp[1] = Double.parseDouble(a2) * Math.pow(10, Double.parseDouble(u2));
+			tmp[2] = Double.parseDouble(a3) * Math.pow(10, Double.parseDouble(u3));
+			tmp[3] = Double.parseDouble(a4) * Math.pow(10, Double.parseDouble(u4));
+			double v1 = Double.parseDouble(v) * Math.pow(10, Double.parseDouble(uv));
+			for (int i = 0; i < tmp.length; i++) {
+				req += 1 / tmp[i];
+			}
+			req = Math.pow(req, -1);
+			for (int i = 0; i < capacitores.length; i++) {
+				capacitores[i] = new CapacitoresDTO();
+				capacitores[i].setCapacitancia(tmp[i]);
+				capacitores[i].setCarga(v1 * req);
+				capacitores[i].setVoltaje((v1 * req) / tmp[i]);
+			}
+			data = "El calculo con un voltaje de $" + v1 + "$ $V$ dio como resultado equivalente $C_eq=$ $" + req
+					+ "$ $F$, $V_eq=$ $" + v1 + "$ $V$, $Q_eq=$ $" + (v1 * req)
+					+ "$ $C$ y arrojo finalmente los siguiente resultados para cada capacitor:<br><ul class\"list-group\">";
+			for (int i = 0; i < capacitores.length; i++) {
+				data += "<li class\"list-group-item\">$C_" + (i + 1) + "=$ $" + capacitores[i].getCapacitancia()
+						+ "$ $F$, $V=$ $" + capacitores[i].getVoltaje() + "$ $V$ y $Q=$ $" + capacitores[i].getCarga()
+						+ "$ $C$</li>";
+			}
+			data += "</ul>";
+		} catch (Exception e) {
+			e.printStackTrace();
+			data = "Error al intentar calcular el circuito de capacitores en serie";
+		}
+		return data;
 	}
 
 }

@@ -46,4 +46,20 @@ public class FisicaElectrica {
 		return tmp;
 	}
 
+	public ArrayList<Object> calcularResism(String a1, String a2, String a3, String a4, String v, String u1, String u2,
+			String u3, String u4, String uv) {
+		ArrayList<Object> tmp = new ArrayList<>();
+		cc = new CircuitoDAO(a1, a2, a3, a4, v, u1, u2, u3, u4, uv);
+		tmp.add(cc.calcularResism());
+		return tmp;
+	}
+
+	public ArrayList<Object> calcularConds(String a1, String a2, String a3, String a4, String v, String u1, String u2,
+			String u3, String u4, String uv) {
+		ArrayList<Object> tmp = new ArrayList<>();
+		cc = new CircuitoDAO(a1, a2, a3, a4, v, u1, u2, u3, u4, uv);
+		tmp.add(cc.calcularCondSerie());
+		return tmp;
+	}
+
 }

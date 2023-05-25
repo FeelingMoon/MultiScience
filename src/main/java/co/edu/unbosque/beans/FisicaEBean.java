@@ -75,6 +75,22 @@ public class FisicaEBean implements Serializable {
 				img = true;
 				scatter = false;
 			}
+		} else if ((valor + tipo).equals("resism")) {
+			tmp = fis.calcularResism(r1, r2, r3, r4, v, u1, u2, u3, u4, u5);
+			if (tmp != null) {
+				resultado = (String) tmp.get(0);
+				rutaImg = Datos.getRuta(valor + tipo);
+				img = true;
+				scatter = false;
+			}
+		} else if ((valor + tipo).equals("conds")) {
+			tmp = fis.calcularConds(r1, r2, r3, r4, v, u1, u2, u3, u4, u5);
+			if (tmp != null) {
+				resultado = (String) tmp.get(0);
+				rutaImg = Datos.getRuta(valor + tipo);
+				img = true;
+				scatter = false;
+			}
 		}
 		if (tmp == null) {
 			rutaImg = Datos.getRuta("meme");
