@@ -110,29 +110,27 @@ public class FuerzasDAO {
 		dataSetFT.setPointRadius(0);
 		data.addChartDataSet(dataSetFT);
 		
-//		LineChartDataSet dataSetY = new LineChartDataSet();
-//		List<Object> values2 = new ArrayList<>();
-//		values2.add(new NumericPoint(0, max+2));
-//		values2.add(new NumericPoint(0, -max-2));
-//		dataSetY.setData(values2);
-//		dataSetY.setLabel("Eje Y");
-//		dataSetY.setBorderColor("rgba(0, 0, 0, 0.3)");
-//		dataSetY.setFill(false);
-//		dataSetY.setPointRadius(0);
-//		data.addChartDataSet(dataSetY);
-//
-//		LineChartDataSet dataSetX = new LineChartDataSet();
-//		List<Object> values3 = new ArrayList<>();
-//		values3.add(new NumericPoint(max+2, 0));
-//		values3.add(new NumericPoint(-max-2, 0));
-//		dataSetX.setData(values3);
-//		dataSetX.setLabel("Eje X");
-//		dataSetX.setBorderColor("rgba(0, 0, 0, 0.3)");
-//		dataSetX.setFill(false);
-//		dataSetX.setPointRadius(0);
-//		data.addChartDataSet(dataSetX);
-		
-		
+		LineChartDataSet dataSetY = new LineChartDataSet();
+		List<Object> values2 = new ArrayList<>();
+		values2.add(new NumericPoint(0, max+2));
+		values2.add(new NumericPoint(0, -max-2));
+		dataSetY.setData(values2);
+		dataSetY.setLabel("Eje Y");
+		dataSetY.setBorderColor("rgba(0, 0, 0, 0.3)");
+		dataSetY.setFill(false);
+		dataSetY.setPointRadius(0);
+		data.addChartDataSet(dataSetY);
+
+		LineChartDataSet dataSetX = new LineChartDataSet();
+		List<Object> values3 = new ArrayList<>();
+		values3.add(new NumericPoint(max+2, 0));
+		values3.add(new NumericPoint(-max-2, 0));
+		dataSetX.setData(values3);
+		dataSetX.setLabel("Eje X");
+		dataSetX.setBorderColor("rgba(0, 0, 0, 0.3)");
+		dataSetX.setFill(false);
+		dataSetX.setPointRadius(0);
+		data.addChartDataSet(dataSetX);
 		
 		LineChartOptions options = new LineChartOptions();
 		Title title = new Title();
