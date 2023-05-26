@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import co.edu.unbosque.daos.CircuitoDAO;
 import co.edu.unbosque.daos.ElectricidadDAO;
+import co.edu.unbosque.daos.MagnetismoDAO;
 
 public class FisicaElectrica {
 
 	private ElectricidadDAO elec;
 	private CircuitoDAO cc;
+	private MagnetismoDAO mag;
 
 	public ArrayList<Object> calcularElec(String q1, String q2, String q3, String q4, String q5, String u1, String u2,
 			String u3, String u4, String u5, String x1, String y1, String x2, String y2, String x3, String y3,
@@ -59,6 +61,38 @@ public class FisicaElectrica {
 		ArrayList<Object> tmp = new ArrayList<>();
 		cc = new CircuitoDAO(a1, a2, a3, a4, v, u1, u2, u3, u4, uv);
 		tmp.add(cc.calcularCondSerie());
+		return tmp;
+	}
+
+	public ArrayList<Object> calcularCondp(String a1, String a2, String a3, String a4, String v, String u1, String u2,
+			String u3, String u4, String uv) {
+		ArrayList<Object> tmp = new ArrayList<>();
+		cc = new CircuitoDAO(a1, a2, a3, a4, v, u1, u2, u3, u4, uv);
+		tmp.add(cc.calcularCondParalelo());
+		return tmp;
+	}
+
+	public ArrayList<Object> calcularCondm(String a1, String a2, String a3, String a4, String v, String u1, String u2,
+			String u3, String u4, String uv) {
+		ArrayList<Object> tmp = new ArrayList<>();
+		cc = new CircuitoDAO(a1, a2, a3, a4, v, u1, u2, u3, u4, uv);
+		tmp.add(cc.calcularCondMixto());
+		return tmp;
+	}
+
+	public ArrayList<Object> calcularMagnev(String vx, String vy, String vz, String uv, String bx, String by, String bz,
+			String ub, String q, String uq, String ang) {
+		ArrayList<Object> tmp = new ArrayList<>();
+		mag = new MagnetismoDAO(vx, vy, vz, uv, bx, by, bz, ub, q, uq, ang);
+		tmp.add(mag.calcularFuerzaV());
+		return tmp;
+	}
+
+	public ArrayList<Object> calcularMagnem(String vx, String vy, String vz, String uv, String bx, String by, String bz,
+			String ub, String q, String uq, String ang) {
+		ArrayList<Object> tmp = new ArrayList<>();
+		mag = new MagnetismoDAO(vx, vy, vz, uv, bx, by, bz, ub, q, uq, ang);
+		tmp.add(mag.calcularFuerzaM());
 		return tmp;
 	}
 

@@ -180,4 +180,101 @@ public class CircuitoDAO {
 		return data;
 	}
 
+	public String calcularCondParalelo() {
+		String data = null;
+		try {
+			double req = 0;
+			CapacitoresDTO[] capacitores = new CapacitoresDTO[4];
+			double[] tmp = new double[4];
+			tmp[0] = Double.parseDouble(a1) * Math.pow(10, Double.parseDouble(u1));
+			tmp[1] = Double.parseDouble(a2) * Math.pow(10, Double.parseDouble(u2));
+			tmp[2] = Double.parseDouble(a3) * Math.pow(10, Double.parseDouble(u3));
+			tmp[3] = Double.parseDouble(a4) * Math.pow(10, Double.parseDouble(u4));
+			double v1 = Double.parseDouble(v) * Math.pow(10, Double.parseDouble(uv));
+			for (int i = 0; i < tmp.length; i++) {
+				req += tmp[i];
+			}
+			for (int i = 0; i < capacitores.length; i++) {
+				capacitores[i] = new CapacitoresDTO();
+				capacitores[i].setCapacitancia(tmp[i]);
+				capacitores[i].setVoltaje(v1);
+				capacitores[i].setCarga(tmp[i] * v1);
+			}
+			data = "El calculo con un voltaje de $" + v1 + "$ $V$ dio como resultado equivalente $C_eq=$ $" + req
+					+ "$ $F$, $V_eq=$ $" + v1 + "$ $V$, $Q_eq=$ $" + (v1 * req)
+					+ "$ $C$ y arrojo finalmente los siguiente resultados para cada capacitor:<br><ul class\"list-group\">";
+			for (int i = 0; i < capacitores.length; i++) {
+				data += "<li class\"list-group-item\">$C_" + (i + 1) + "=$ $" + capacitores[i].getCapacitancia()
+						+ "$ $F$, $V=$ $" + capacitores[i].getVoltaje() + "$ $V$ y $Q=$ $" + capacitores[i].getCarga()
+						+ "$ $C$</li>";
+			}
+			data += "</ul>";
+		} catch (Exception e) {
+			e.printStackTrace();
+			data = "Error al intentar calcular el circuito de capacitores en paralelo";
+		}
+		return data;
+	}
+
+	public String calcularCondMixto() {
+		String data = null;
+		try {
+			CapacitoresDTO[] capacitores = new CapacitoresDTO[4];
+			double[] tmp = new double[4];
+			tmp[0] = Double.parseDouble(a1) * Math.pow(10, Double.parseDouble(u1));
+			tmp[1] = Double.parseDouble(a2) * Math.pow(10, Double.parseDouble(u2));
+			tmp[2] = Double.parseDouble(a3) * Math.pow(10, Double.parseDouble(u3));
+			tmp[3] = Double.parseDouble(a4) * Math.pow(10, Double.parseDouble(u4));
+			double v1 = Double.parseDouble(v) * Math.pow(10, Double.parseDouble(uv));
+
+			for (int i = 0; i < capacitores.length; i++) {
+				capacitores[i] = new CapacitoresDTO();
+				capacitores[i].setCapacitancia(tmp[i]);
+			}
+			CapacitoresDTO a = new CapacitoresDTO();
+			a.setCapacitancia((capacitores[3].getCapacitancia() * capacitores[2].getCapacitancia())
+					/ (capacitores[3].getCapacitancia() + capacitores[2].getCapacitancia()));
+			CapacitoresDTO b = new CapacitoresDTO();
+			b.setCapacitancia(a.getCapacitancia() + capacitores[1].getCapacitancia());
+
+			CapacitoresDTO ceq = new CapacitoresDTO();
+			ceq.setCapacitancia((b.getCapacitancia() * capacitores[0].getCapacitancia())
+					/ (b.getCapacitancia() + capacitores[0].getCapacitancia()));
+			ceq.setVoltaje(v1);
+			ceq.setCarga(v1 * ceq.getCapacitancia());
+
+			capacitores[0].setCarga(ceq.getCarga());
+			capacitores[0].setVoltaje(capacitores[0].getCarga() / capacitores[0].getCapacitancia());
+
+			b.setCarga(ceq.getCarga());
+			b.setVoltaje(b.getCarga() / b.getCapacitancia());
+
+			capacitores[1].setVoltaje(b.getVoltaje());
+			capacitores[1].setCarga(capacitores[1].getVoltaje() * capacitores[1].getCapacitancia());
+
+			a.setVoltaje(b.getVoltaje());
+			a.setCarga(a.getVoltaje() * a.getCapacitancia());
+
+			capacitores[2].setCarga(a.getCarga());
+			capacitores[2].setVoltaje(capacitores[2].getCarga() / capacitores[2].getCapacitancia());
+
+			capacitores[3].setCarga(a.getCarga());
+			capacitores[3].setVoltaje(capacitores[3].getCarga() / capacitores[3].getCapacitancia());
+
+			data = "El calculo con un voltaje de $" + v1 + "$ $V$ dio como resultado equivalente $C_eq=$ $"
+					+ ceq.getCapacitancia() + "$ $F$, $V_eq=$ $" + v1 + "$ $V$, $Q_eq=$ $" + ceq.getCarga()
+					+ "$ $C$ y arrojo finalmente los siguiente resultados para cada capacitor:<br><ul class\"list-group\">";
+			for (int i = 0; i < capacitores.length; i++) {
+				data += "<li class\"list-group-item\">$C_" + (i + 1) + "=$ $" + capacitores[i].getCapacitancia()
+						+ "$ $F$, $V=$ $" + capacitores[i].getVoltaje() + "$ $V$ y $Q=$ $" + capacitores[i].getCarga()
+						+ "$ $C$</li>";
+			}
+			data += "</ul>";
+		} catch (Exception e) {
+			e.printStackTrace();
+			data = "Error al intentar calcular el circuito de capacitores mixtos";
+		}
+		return data;
+	}
+
 }

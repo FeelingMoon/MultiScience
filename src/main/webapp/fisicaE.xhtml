@@ -33,12 +33,20 @@
 												itemLabel="Calculadora electrica" selected="true" />
 											<f:selectItem itemValue="resisp"
 												itemLabel="Calcular circuito con resistencias en paralelo" />
+											<f:selectItem itemValue="condp"
+												itemLabel="Calcular circuito con capacitores en paralelo" />
 											<f:selectItem itemValue="resiss"
 												itemLabel="Calcular circuito con resistencias en serie" />
 											<f:selectItem itemValue="conds"
 												itemLabel="Calcular circuito con capacitores en serie" />
 											<f:selectItem itemValue="resism"
 												itemLabel="Calcular circuito con resistencias mixto" />
+											<f:selectItem itemValue="condm"
+												itemLabel="Calcular circuito con capacitores mixto" />
+											<f:selectItem itemValue="magnev"
+												itemLabel="Calcular fuerza magnetica con vectores" />
+											<f:selectItem itemValue="magnem"
+												itemLabel="Calcular fuerza magnetica con magnitudes" />
 											<f:ajax render="descripcion" />
 											<f:ajax render="resultado" />
 											<p:ajax oncomplete="MathJax.typeset();" />
@@ -700,6 +708,288 @@
 																</div>
 															</div>
 														</h:panelGroup>
+														<h:panelGroup
+															rendered="#{fisicaEBean.valor == 'magnev'}">
+															<div class="card container text-center p-3 fis-contain">
+																<div class="row">
+																	<div class="col-auto">
+																		<h:outputLabel value="$Q=$"
+																			class="form-label mt-2 text-right" />
+																	</div>
+																	<div class="col-2 mt-1 md-6">
+																		<p:inputText value="#{fisicaEBean.q}"
+																			class="q-input ui-inputtext" type="number" />
+																	</div>
+																	<div class="col-auto mt-1 md-6">
+																		<p:selectOneMenu value="#{fisicaEBean.u1}">
+																			<f:selectItem itemLabel="-" itemValue="0" />
+																			<f:selectItem itemLabel="Exa - E" itemValue="18" />
+																			<f:selectItem itemLabel="Peta - P" itemValue="15" />
+																			<f:selectItem itemLabel="Tera - T" itemValue="12" />
+																			<f:selectItem itemLabel="Giga - G" itemValue="9" />
+																			<f:selectItem itemLabel="Mega - M" itemValue="6" />
+																			<f:selectItem itemLabel="Kilo - k" itemValue="3" />
+																			<f:selectItem itemLabel="Hecto - h" itemValue="2" />
+																			<f:selectItem itemLabel="Deca - da" itemValue="1" />
+																			<f:selectItem itemLabel="Deci - d" itemValue="-1" />
+																			<f:selectItem itemLabel="Centi - c" itemValue="-2" />
+																			<f:selectItem itemLabel="Mili - m" itemValue="-3" />
+																			<f:selectItem itemLabel="Micro - &#181;"
+																				itemValue="-6" />
+																			<f:selectItem itemLabel="Nano - n" itemValue="-9" />
+																			<f:selectItem itemLabel="Pico - p" itemValue="-12" />
+																			<f:selectItem itemLabel="Femto - f" itemValue="-15" />
+																			<f:selectItem itemLabel="Atto - a" itemValue="-18" />
+																		</p:selectOneMenu>
+																		<h:outputLabel
+																			value="&nbsp;&nbsp;$C$."
+																			class="form-label text-left" />
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-auto">
+																		<h:outputLabel
+																			value="$\vec{V}=$"
+																			class="form-label mt-2 text-right" />
+																	</div>
+																	<div class="col-2 mt-1 md-6">
+																		<p:inputText value="#{fisicaEBean.vx}"
+																			class="q-input ui-inputtext" type="number" />
+																	</div>
+																	<div class="col-auto">
+																		<h:outputLabel
+																			value="$\hat{i}$&nbsp;&nbsp;&nbsp;$+$"
+																			class="form-label text-left mt-2" />
+																	</div>
+																	<div class="col-2 mt-1 md-6">
+																		<p:inputText value="#{fisicaEBean.vy}"
+																			class="q-input ui-inputtext" type="number" />
+																	</div>
+																	<div class="col-auto">
+																		<h:outputLabel value="$\hat{j}$&nbsp;&nbsp;&nbsp;$+$"
+																			class="form-label text-left mt-2" />
+																	</div>
+																	<div class="col-2 mt-1 md-6">
+																		<p:inputText value="#{fisicaEBean.vz}"
+																			class="q-input ui-inputtext" type="number" />
+																	</div>
+																	<div class="col-auto">
+																		<h:outputLabel value="$\hat{k}$&nbsp;&nbsp;&nbsp;"
+																			class="form-label text-left mt-2" />
+																	</div>
+																	<div class="col-auto mt-1 md-6">
+																		<p:selectOneMenu value="#{fisicaEBean.u2}">
+																			<f:selectItem itemLabel="-" itemValue="0" />
+																			<f:selectItem itemLabel="Exa - E" itemValue="18" />
+																			<f:selectItem itemLabel="Peta - P" itemValue="15" />
+																			<f:selectItem itemLabel="Tera - T" itemValue="12" />
+																			<f:selectItem itemLabel="Giga - G" itemValue="9" />
+																			<f:selectItem itemLabel="Mega - M" itemValue="6" />
+																			<f:selectItem itemLabel="Kilo - k" itemValue="3" />
+																			<f:selectItem itemLabel="Hecto - h" itemValue="2" />
+																			<f:selectItem itemLabel="Deca - da" itemValue="1" />
+																			<f:selectItem itemLabel="Deci - d" itemValue="-1" />
+																			<f:selectItem itemLabel="Centi - c" itemValue="-2" />
+																			<f:selectItem itemLabel="Mili - m" itemValue="-3" />
+																			<f:selectItem itemLabel="Micro - &#181;"
+																				itemValue="-6" />
+																			<f:selectItem itemLabel="Nano - n" itemValue="-9" />
+																			<f:selectItem itemLabel="Pico - p" itemValue="-12" />
+																			<f:selectItem itemLabel="Femto - f" itemValue="-15" />
+																			<f:selectItem itemLabel="Atto - a" itemValue="-18" />
+																		</p:selectOneMenu>
+																		<h:outputLabel
+																			value="&nbsp;&nbsp;$m/s$."
+																			class="form-label text-left" />
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-auto">
+																		<h:outputLabel
+																			value="$\vec{B}=$"
+																			class="form-label mt-2 text-right" />
+																	</div>
+																	<div class="col-2 mt-1 md-6">
+																		<p:inputText value="#{fisicaEBean.bx}"
+																			class="q-input ui-inputtext" type="number" />
+																	</div>
+																	<div class="col-auto">
+																		<h:outputLabel
+																			value="$\hat{i}$&nbsp;&nbsp;&nbsp;$+$"
+																			class="form-label text-left mt-2" />
+																	</div>
+																	<div class="col-2 mt-1 md-6">
+																		<p:inputText value="#{fisicaEBean.by}"
+																			class="q-input ui-inputtext" type="number" />
+																	</div>
+																	<div class="col-auto">
+																		<h:outputLabel value="$\hat{j}$&nbsp;&nbsp;&nbsp;$+$"
+																			class="form-label text-left mt-2" />
+																	</div>
+																	<div class="col-2 mt-1 md-6">
+																		<p:inputText value="#{fisicaEBean.bz}"
+																			class="q-input ui-inputtext" type="number" />
+																	</div>
+																	<div class="col-auto">
+																		<h:outputLabel value="$\hat{k}$&nbsp;&nbsp;&nbsp;"
+																			class="form-label text-left mt-2" />
+																	</div>
+																	<div class="col-auto mt-1 md-6">
+																		<p:selectOneMenu value="#{fisicaEBean.u3}">
+																			<f:selectItem itemLabel="-" itemValue="0" />
+																			<f:selectItem itemLabel="Exa - E" itemValue="18" />
+																			<f:selectItem itemLabel="Peta - P" itemValue="15" />
+																			<f:selectItem itemLabel="Tera - T" itemValue="12" />
+																			<f:selectItem itemLabel="Giga - G" itemValue="9" />
+																			<f:selectItem itemLabel="Mega - M" itemValue="6" />
+																			<f:selectItem itemLabel="Kilo - k" itemValue="3" />
+																			<f:selectItem itemLabel="Hecto - h" itemValue="2" />
+																			<f:selectItem itemLabel="Deca - da" itemValue="1" />
+																			<f:selectItem itemLabel="Deci - d" itemValue="-1" />
+																			<f:selectItem itemLabel="Centi - c" itemValue="-2" />
+																			<f:selectItem itemLabel="Mili - m" itemValue="-3" />
+																			<f:selectItem itemLabel="Micro - &#181;"
+																				itemValue="-6" />
+																			<f:selectItem itemLabel="Nano - n" itemValue="-9" />
+																			<f:selectItem itemLabel="Pico - p" itemValue="-12" />
+																			<f:selectItem itemLabel="Femto - f" itemValue="-15" />
+																			<f:selectItem itemLabel="Atto - a" itemValue="-18" />
+																		</p:selectOneMenu>
+																		<h:outputLabel
+																			value="&nbsp;&nbsp;$T$."
+																			class="form-label text-left" />
+																	</div>
+																</div>
+															</div>
+														</h:panelGroup>
+														<h:panelGroup
+															rendered="#{fisicaEBean.valor == 'magnem'}">
+															<div class="card container text-center p-3 fis-contain">
+																<div class="row">
+																	<div class="col-auto">
+																		<h:outputLabel value="$Q=$&nbsp;&nbsp;&nbsp;"
+																			class="form-label mt-2 text-right" />
+																	</div>
+																	<div class="col-2 mt-1 md-6">
+																		<p:inputText value="#{fisicaEBean.q}"
+																			class="q-input ui-inputtext" type="number" />
+																	</div>
+																	<div class="col-auto mt-1 md-6">
+																		<p:selectOneMenu value="#{fisicaEBean.u1}">
+																			<f:selectItem itemLabel="-" itemValue="0" />
+																			<f:selectItem itemLabel="Exa - E" itemValue="18" />
+																			<f:selectItem itemLabel="Peta - P" itemValue="15" />
+																			<f:selectItem itemLabel="Tera - T" itemValue="12" />
+																			<f:selectItem itemLabel="Giga - G" itemValue="9" />
+																			<f:selectItem itemLabel="Mega - M" itemValue="6" />
+																			<f:selectItem itemLabel="Kilo - k" itemValue="3" />
+																			<f:selectItem itemLabel="Hecto - h" itemValue="2" />
+																			<f:selectItem itemLabel="Deca - da" itemValue="1" />
+																			<f:selectItem itemLabel="Deci - d" itemValue="-1" />
+																			<f:selectItem itemLabel="Centi - c" itemValue="-2" />
+																			<f:selectItem itemLabel="Mili - m" itemValue="-3" />
+																			<f:selectItem itemLabel="Micro - &#181;"
+																				itemValue="-6" />
+																			<f:selectItem itemLabel="Nano - n" itemValue="-9" />
+																			<f:selectItem itemLabel="Pico - p" itemValue="-12" />
+																			<f:selectItem itemLabel="Femto - f" itemValue="-15" />
+																			<f:selectItem itemLabel="Atto - a" itemValue="-18" />
+																		</p:selectOneMenu>
+																		<h:outputLabel
+																			value="&nbsp;&nbsp;$C$."
+																			class="form-label text-left" />
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-auto">
+																		<h:outputLabel
+																			value="$|\vec{V}|=$"
+																			class="form-label mt-2 text-right" />
+																	</div>
+																	<div class="col-2 mt-1 md-6">
+																		<p:inputText value="#{fisicaEBean.vx}"
+																			class="q-input ui-inputtext" type="number" />
+																	</div>
+																	<div class="col-auto mt-1 md-6">
+																		<p:selectOneMenu value="#{fisicaEBean.u2}">
+																			<f:selectItem itemLabel="-" itemValue="0" />
+																			<f:selectItem itemLabel="Exa - E" itemValue="18" />
+																			<f:selectItem itemLabel="Peta - P" itemValue="15" />
+																			<f:selectItem itemLabel="Tera - T" itemValue="12" />
+																			<f:selectItem itemLabel="Giga - G" itemValue="9" />
+																			<f:selectItem itemLabel="Mega - M" itemValue="6" />
+																			<f:selectItem itemLabel="Kilo - k" itemValue="3" />
+																			<f:selectItem itemLabel="Hecto - h" itemValue="2" />
+																			<f:selectItem itemLabel="Deca - da" itemValue="1" />
+																			<f:selectItem itemLabel="Deci - d" itemValue="-1" />
+																			<f:selectItem itemLabel="Centi - c" itemValue="-2" />
+																			<f:selectItem itemLabel="Mili - m" itemValue="-3" />
+																			<f:selectItem itemLabel="Micro - &#181;"
+																				itemValue="-6" />
+																			<f:selectItem itemLabel="Nano - n" itemValue="-9" />
+																			<f:selectItem itemLabel="Pico - p" itemValue="-12" />
+																			<f:selectItem itemLabel="Femto - f" itemValue="-15" />
+																			<f:selectItem itemLabel="Atto - a" itemValue="-18" />
+																		</p:selectOneMenu>
+																		<h:outputLabel
+																			value="&nbsp;&nbsp;$m/s$."
+																			class="form-label text-left" />
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-auto">
+																		<h:outputLabel
+																			value="$|\vec{B}|=$"
+																			class="form-label mt-2 text-right" />
+																	</div>
+																	<div class="col-2 mt-1 md-6">
+																		<p:inputText value="#{fisicaEBean.bx}"
+																			class="q-input ui-inputtext" type="number" />
+																	</div>
+																	<div class="col-auto mt-1 md-6">
+																		<p:selectOneMenu value="#{fisicaEBean.u3}">
+																			<f:selectItem itemLabel="-" itemValue="0" />
+																			<f:selectItem itemLabel="Exa - E" itemValue="18" />
+																			<f:selectItem itemLabel="Peta - P" itemValue="15" />
+																			<f:selectItem itemLabel="Tera - T" itemValue="12" />
+																			<f:selectItem itemLabel="Giga - G" itemValue="9" />
+																			<f:selectItem itemLabel="Mega - M" itemValue="6" />
+																			<f:selectItem itemLabel="Kilo - k" itemValue="3" />
+																			<f:selectItem itemLabel="Hecto - h" itemValue="2" />
+																			<f:selectItem itemLabel="Deca - da" itemValue="1" />
+																			<f:selectItem itemLabel="Deci - d" itemValue="-1" />
+																			<f:selectItem itemLabel="Centi - c" itemValue="-2" />
+																			<f:selectItem itemLabel="Mili - m" itemValue="-3" />
+																			<f:selectItem itemLabel="Micro - &#181;"
+																				itemValue="-6" />
+																			<f:selectItem itemLabel="Nano - n" itemValue="-9" />
+																			<f:selectItem itemLabel="Pico - p" itemValue="-12" />
+																			<f:selectItem itemLabel="Femto - f" itemValue="-15" />
+																			<f:selectItem itemLabel="Atto - a" itemValue="-18" />
+																		</p:selectOneMenu>
+																		<h:outputLabel
+																			value="&nbsp;&nbsp;$T$."
+																			class="form-label text-left" />
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-auto">
+																		<h:outputLabel
+																			value="&nbsp;$\theta=$&nbsp;&nbsp;&nbsp;"
+																			class="form-label mt-2 text-right" />
+																	</div>
+																	<div class="col-2 mt-1 md-6">
+																		<p:inputText value="#{fisicaEBean.ang}"
+																			class="q-input ui-inputtext" type="number" />
+																	</div>
+																	<div class="col-auto">
+																		<h:outputLabel
+																			value="&nbsp;&nbsp;$rad$."
+																			class="form-label text-left mt-2" />
+																	</div>
+																</div>
+															</div>
+														</h:panelGroup>
 														<p:commandButton class="m-2" value="Continuar"
 															icon="pi pi-check" iconPos="right"
 															action="#{fisicaEBean.calcular}" update=":res growl"
@@ -728,8 +1018,12 @@
 										model="#{fisicaEBean.scatterModel}" />
 								</h:panelGroup>
 								<h:panelGroup rendered="#{fisicaEBean.img}">
+									<p:commandButton type="button" value="Imprimir"
+										icon="pi pi-print" styleClass="mr-2 mb-2">
+										<p:printer target="img" title="Imagen" />
+									</p:commandButton>
 									<div class="m-4">
-										<p:graphicImage value="#{fisicaEBean.rutaImg}"
+										<p:graphicImage id="img" value="#{fisicaEBean.rutaImg}"
 											styleClass="responsive-image" />
 									</div>
 								</h:panelGroup>
