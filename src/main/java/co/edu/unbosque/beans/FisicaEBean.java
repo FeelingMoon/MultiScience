@@ -29,6 +29,7 @@ public class FisicaEBean implements Serializable {
 	private String x4, y4;
 	private String x5, y5;
 	private String r1, r2, r3, r4, v;
+	private String vx, vy, vz, bx, by, bz, q, ang;
 	private ScatterChartModel scatterModel;
 	private boolean scatter, img;
 	private FisicaElectrica fis;
@@ -75,6 +76,52 @@ public class FisicaEBean implements Serializable {
 				img = true;
 				scatter = false;
 			}
+		} else if ((valor + tipo).equals("resism")) {
+			tmp = fis.calcularResism(r1, r2, r3, r4, v, u1, u2, u3, u4, u5);
+			if (tmp != null) {
+				resultado = (String) tmp.get(0);
+				rutaImg = Datos.getRuta(valor + tipo);
+				img = true;
+				scatter = false;
+			}
+		} else if ((valor + tipo).equals("conds")) {
+			tmp = fis.calcularConds(r1, r2, r3, r4, v, u1, u2, u3, u4, u5);
+			if (tmp != null) {
+				resultado = (String) tmp.get(0);
+				rutaImg = Datos.getRuta(valor + tipo);
+				img = true;
+				scatter = false;
+			}
+		} else if ((valor + tipo).equals("condp")) {
+			tmp = fis.calcularCondp(r1, r2, r3, r4, v, u1, u2, u3, u4, u5);
+			if (tmp != null) {
+				resultado = (String) tmp.get(0);
+				rutaImg = Datos.getRuta(valor + tipo);
+				img = true;
+				scatter = false;
+			}
+		} else if ((valor + tipo).equals("condm")) {
+			tmp = fis.calcularCondm(r1, r2, r3, r4, v, u1, u2, u3, u4, u5);
+			if (tmp != null) {
+				resultado = (String) tmp.get(0);
+				rutaImg = Datos.getRuta(valor + tipo);
+				img = true;
+				scatter = false;
+			}
+		} else if (valor.equals("magnev")) {
+			tmp = fis.calcularMagnev(vx, vy, vz, u2, bx, by, bz, u3, q, u1, "0");
+			if (tmp != null) {
+				resultado = (String) tmp.get(0);
+				img = false;
+				scatter = false;
+			}
+		} else if (valor.equals("magnem")) {
+			tmp = fis.calcularMagnem(vx, vy, vz, u2, bx, by, bz, u3, q, u1, ang);
+			if (tmp != null) {
+				resultado = (String) tmp.get(0);
+				img = false;
+				scatter = false;
+			}
 		}
 		if (tmp == null) {
 			rutaImg = Datos.getRuta("meme");
@@ -102,6 +149,13 @@ public class FisicaEBean implements Serializable {
 		y4 = null;
 		x5 = null;
 		y5 = null;
+		vx = null;
+		vy = null;
+		vz = null;
+		bx = null;
+		by = null;
+		bz = null;
+		q = null;
 	}
 
 	public void graficaScatterDefault() {
@@ -406,6 +460,70 @@ public class FisicaEBean implements Serializable {
 
 	public void setV(String v) {
 		this.v = v;
+	}
+
+	public String getVx() {
+		return vx;
+	}
+
+	public void setVx(String vx) {
+		this.vx = vx;
+	}
+
+	public String getVy() {
+		return vy;
+	}
+
+	public void setVy(String vy) {
+		this.vy = vy;
+	}
+
+	public String getVz() {
+		return vz;
+	}
+
+	public void setVz(String vz) {
+		this.vz = vz;
+	}
+
+	public String getBx() {
+		return bx;
+	}
+
+	public void setBx(String bx) {
+		this.bx = bx;
+	}
+
+	public String getBy() {
+		return by;
+	}
+
+	public void setBy(String by) {
+		this.by = by;
+	}
+
+	public String getBz() {
+		return bz;
+	}
+
+	public void setBz(String bz) {
+		this.bz = bz;
+	}
+
+	public String getQ() {
+		return q;
+	}
+
+	public void setQ(String q) {
+		this.q = q;
+	}
+
+	public String getAng() {
+		return ang;
+	}
+
+	public void setAng(String ang) {
+		this.ang = ang;
 	}
 
 }
