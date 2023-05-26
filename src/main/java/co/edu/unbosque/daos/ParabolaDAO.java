@@ -63,8 +63,8 @@ public class ParabolaDAO {
 		double minY = Double.MAX_VALUE;
 		i = 0;
 		double y = 0;
-		
-		while(y >= 0) {
+
+		while (y >= 0) {
 			try {
 				eval.defineVariable("x", i);
 				y = eval.eval(ec).evalDouble();
@@ -138,12 +138,11 @@ public class ParabolaDAO {
 	public ArrayList<Object> solucion() {
 
 		ArrayList<Object> datos = new ArrayList<>();
-		
+
 		datos.add(createLineChart());
-		datos.add("La trayectoria parabolica dada con velocidad" + vel + "$m/s$ y angulo de" + ang +
-				"Â°, se muestra en la siguiente grafica, con altura maxima de " + format.format(maxY) + " metros y recorrio una distancia horinzontal de " 
-				+ format.format(i) + " metros.");
-		
+		datos.add("La trayectoria parabolica dada con velocidad " + vel + " $m/s$ y angulo de" + ang
+				+ " $°$, se muestra en la siguiente grafica, con altura maxima de " + format.format(maxY)
+				+ " metros y recorrio una distancia horinzontal de " + format.format(i) + " metros.");
 
 		return datos;
 

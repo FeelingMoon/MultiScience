@@ -15,23 +15,23 @@ import org.primefaces.model.charts.optionconfig.title.Title;
 import org.primefaces.model.charts.scatter.ScatterChartModel;
 
 public class AceleracionDAO {
-	
-	private double acel,pos;
-	private String funcV, funcP;
+
+	private double acel, pos, maxXP, maxVel;
+	private String funcV, funcP, resultado;
 	private ScatterChartModel lineModel;
-	
+
 	public AceleracionDAO(double acel) {
-		
+
 		this.acel = acel;
-		this.pos = acel/2;
+		this.pos = acel / 2;
 		this.funcV = acel + "x";
 		this.funcP = pos + "x^2";
 		lineModel = new ScatterChartModel();
-		
+
 	}
-	
+
 	public ScatterChartModel createLineChart() {
-		
+
 		LineChartDataSet dataSetVel = new LineChartDataSet();
 		LineChartDataSet dataSetPos = new LineChartDataSet();
 		ExprEvaluator eval = new ExprEvaluator();
@@ -39,40 +39,18 @@ public class AceleracionDAO {
 		IExpr ecV = eval.eval("Cancel(" + funcV + ")");
 		IExpr ecP = eval.eval("Cancel(" + funcP + ")");
 		List<Object> posValues = new ArrayList<>();
-		List<Object>velValues = new ArrayList<>();
-		
+		List<Object> velValues = new ArrayList<>();
+
 		double y1 = 0;
 		double y2 = 0;
 		double i = 0;
 		double maxH = 40;
-		
-		if(acel >= 40) {
+
+		if (acel >= 40) {
 			maxH = acel;
 		}
-		
-		while(i <= 40 && y1 <= maxH) {
-			try {
-				eval.defineVariable("x", i);
-				y1 = eval.eval(ecV).evalDouble();
-				velValues.add(new NumericPoint(i, y1));
-				i += 0.01;
-				eval.clearVariables();
-			} catch (Exception e) {
-				continue;
-			}
-		}
-		
-		dataSetVel.setData(velValues);
-		dataSetVel.setLabel("Velocidad");
-		dataSetVel.setBorderColor("rgba(153, 102, 255, 1)");
-		dataSetVel.setFill(false);
-		dataSetVel.setTension(0.5);
-		dataSetVel.setPointRadius(0);
-		data.addChartDataSet(dataSetVel);
-		i = 0;
-		
-		
-		while(i <= 40 && y2 <= maxH) {
+
+		while (i <= 40 && y2 <= maxH) {
 			try {
 				eval.defineVariable("x", i);
 				y2 = eval.eval(ecP).evalDouble();
@@ -83,7 +61,10 @@ public class AceleracionDAO {
 				continue;
 			}
 		}
-		
+
+		maxXP = i;
+		i = 0;
+
 		dataSetPos.setData(posValues);
 		dataSetPos.setLabel("Posicion");
 		dataSetPos.setBorderColor("rgba(164, 17, 0, 1)");
@@ -91,7 +72,31 @@ public class AceleracionDAO {
 		dataSetPos.setTension(0.5);
 		dataSetPos.setPointRadius(0);
 		data.addChartDataSet(dataSetPos);
-		
+
+		while (i <= 40 && y1 <= maxH) {
+			try {
+				eval.defineVariable("x", i);
+				y1 = eval.eval(ecV).evalDouble();
+				if (i == maxXP) {
+					maxVel = y1;
+				}
+				velValues.add(new NumericPoint(i, y1));
+				i += 0.01;
+				eval.clearVariables();
+			} catch (Exception e) {
+				continue;
+			}
+		}
+
+		dataSetVel.setData(velValues);
+		dataSetVel.setLabel("Velocidad");
+		dataSetVel.setBorderColor("rgba(153, 102, 255, 1)");
+		dataSetVel.setFill(false);
+		dataSetVel.setTension(0.5);
+		dataSetVel.setPointRadius(0);
+		data.addChartDataSet(dataSetVel);
+		i = 0;
+
 		LineChartDataSet dataSetAcel = new LineChartDataSet();
 		List<Object> values = new ArrayList<>();
 		values.add(new NumericPoint(0, acel));
@@ -102,9 +107,7 @@ public class AceleracionDAO {
 		dataSetAcel.setFill(false);
 		dataSetAcel.setPointRadius(0);
 		data.addChartDataSet(dataSetAcel);
-		
-		
-		
+
 		LineChartDataSet dataSetY = new LineChartDataSet();
 		List<Object> values2 = new ArrayList<>();
 		values2.add(new NumericPoint(0, maxH));
@@ -142,17 +145,19 @@ public class AceleracionDAO {
 		lineModel.setOptions(options);
 		lineModel.setData(data);
 
+		resultado = "Cuando la aceleración es de " + acel + "$m/s^2$ llega a " + y2 + "$m$ en " + maxXP + "$s$"
+				+ " con una velocidad de " + maxVel + " $m/s$.";
 		return lineModel;
-		
+
 	}
-	
-	public ArrayList<Object> solucion(){
-		
+
+	public ArrayList<Object> solucion() {
+
 		ArrayList<Object> datos = new ArrayList<>();
 		datos.add(createLineChart());
-		datos.add("Aceleracion: " + acel);
+		datos.add(resultado);
 		return datos;
-		
+
 	}
 
 }

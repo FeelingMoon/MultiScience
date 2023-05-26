@@ -14,6 +14,7 @@
 	<script src="scripts/mathquill.js"></script>
 	<link rel="stylesheet" href="styles/mathquill.css"></link>
 	<link rel="stylesheet" href="styles/Math.css"></link>
+	<link rel="stylesheet" href="styles/Fis.css"></link>
 	<script type="text/javascript" src="scripts/load-mathjax.js"></script>
 </h:head>
 <h:body>
@@ -56,7 +57,7 @@
 								<p:dialog id="dlg" header="Confirmacion" widgetVar="dlg"
 									modal="true" resizable="false" position="center center"
 									onShow="PF('dlg').initPosition();  MathJax.typeset();">
-									<div class="card m-4">
+									<div class="card m-4 dialog-content">
 										<h:panelGroup id="resultado">
 											<h:form id="mat">
 												<div class="m-4">
@@ -64,33 +65,36 @@
 												</div>
 												<div class="form-group">
 													<h:panelGroup rendered="#{fisicaBean.valor == 'parabola'}">
-														<div class="row">
-															<div class="col-auto">
-																<h:outputLabel value="$Velocidad: $"
-																	class="form-label m-2 text-right" />
-															</div>
-															<div class="col-auto">
-																<p:inputNumber value="#{fisicaBean.vel}"
-																	class="form-control" decimal="6" />
-															</div>
-															<div class="col-auto">
-																<div class="m-2 md-6">
-																	<h:outputLabel value="$m/s$" class="text-center" />
+														<div class="card container text-center p-3 math-contain">
+															<div class="row">
+																<div class="col-auto">
+																	<h:outputLabel value="$Velocidad: $"
+																		class="form-label m-2 text-right" />
+																</div>
+																<div class="col-auto">
+																	<p:inputNumber value="#{fisicaBean.vel}"
+																		class="form-control ui-inputtext" decimal="6" />
+																</div>
+																<div class="col-auto">
+																	<div class="m-2 md-6">
+																		<h:outputLabel value="$m/s$" class="text-center" />
+																	</div>
 																</div>
 															</div>
-														</div>
-														<div class="row">
-															<div class="col-auto">
-																<h:outputLabel value="$Angulo: $"
-																	class="form-label m-2 text-left" />
-															</div>
-															<div class="col-auto">
-																<p:inputNumber value="#{fisicaBean.ang}"
-																	class="form-control" decimal="6" />
-															</div>
-															<div class="col-auto">
-																<div class="m-2 md-6">
-																	<h:outputLabel value="$°$" class="text-center" />
+															<div class="row">
+																<div class="col-auto">
+																	<h:outputLabel value="$Angulo: $"
+																		class="form-label m-2 text-left" />
+																</div>
+																<div class="col-auto">
+																	<p:inputNumber value="#{fisicaBean.ang}"
+																		class="form-control ui-inputtext" decimal="6"
+																		minValue="0" maxValue="89" />
+																</div>
+																<div class="col-auto">
+																	<div class="m-2 md-6">
+																		<h:outputLabel value="$°$" class="text-center" />
+																	</div>
 																</div>
 															</div>
 														</div>
@@ -105,10 +109,8 @@
 																		class="form-label m-2 text-right" />
 																</div>
 																<div class="col-auto">
-																	<div class="col-auto">
-																		<p:inputNumber value="#{fisicaBean.acel}"
-																			class="form-control" decimal="6" />
-																	</div>
+																	<p:inputNumber value="#{fisicaBean.acel}"
+																		class="form-control ui-inputtext" decimal="6" />
 																</div>
 																<div class="col-auto">
 																	<div class="m-2 md-6">
@@ -119,93 +121,98 @@
 														</div>
 													</h:panelGroup>
 													<h:panelGroup rendered="#{fisicaBean.valor == 'fuerzas'}">
-														<div class="row">
-															<div class="col-auto">
-																<h:outputLabel value="$Fuerza: $"
-																	class="form-label m-2 text-right" />
-															</div>
-															<div class="col-auto">
-																<p:inputNumber value="#{fisicaBean.f1}"
-																	class="form-control" minValue="0" decimalPlaces = "2"/>
-															</div>
-															<div class="col-auto">
-																<div class="m-2 md-6">
-																	<h:outputLabel value="$N$" class="text-center" />
+													<div class="card container p-3 text-center cir-contain">
+															<div class="row m-2">
+																<div class="col-auto">
+																	<h:outputLabel value="$Fuerza: $"
+																		class="form-label m-2 text-right" />
+																</div>
+																<div class="col-auto">
+																	<p:inputNumber value="#{fisicaBean.f1}"
+																		class="form-control ui-inputtext" minValue="0"
+																		decimalPlaces="2" />
+																</div>
+																<div class="col-auto">
+																	<div class="m-2 md-6">
+																		<h:outputLabel value="$N$" class="text-center" />
+																	</div>
+																</div>
+																<div class="col-auto">
+																	<h:outputLabel value="$Angulo: $"
+																		class="form-label m-2 text-left" />
+																</div>
+																<div class="col-auto">
+																	<p:inputNumber value="#{fisicaBean.ang1}"
+																		class="form-control ui-inputtext" minValue="0"
+																		maxValue="360" decimalPlaces="2" />
+																</div>
+																<div class="col-auto">
+																	<div class="m-2 md-6">
+																		<h:outputLabel value="$°$" class="text-center" />
+																	</div>
 																</div>
 															</div>
-															<div class="col-auto">
-																<h:outputLabel value="$Angulo: $"
-																	class="form-label m-2 text-left" />
-															</div>
-															<div class="col-auto">
-																<p:inputNumber value="#{fisicaBean.ang1}"
-																	class="form-control" minValue="0"
-																	maxValue="360" decimalPlaces = "2"/>
-															</div>
-															<div class="col-auto">
-																<div class="m-2 md-6">
-																	<h:outputLabel value="$°$" class="text-center" />
+															<div class="row m-2">
+																<div class="col-auto">
+																	<h:outputLabel value="$Fuerza: $"
+																		class="form-label m-2 text-right" />
+																</div>
+																<div class="col-auto">
+																	<p:inputNumber value="#{fisicaBean.f2}"
+																		class="form-control ui-inputtext" minValue="0"
+																		decimalPlaces="2" />
+																</div>
+																<div class="col-auto">
+																	<div class="m-2 md-6">
+																		<h:outputLabel value="$N$" class="text-center" />
+																	</div>
+																</div>
+																<div class="col-auto">
+																	<h:outputLabel value="$Angulo: $"
+																		class="form-label m-2 text-left" />
+																</div>
+																<div class="col-auto">
+																	<p:inputNumber value="#{fisicaBean.ang2}"
+																		class="form-control ui-inputtext" minValue="0"
+																		maxValue="360" decimalPlaces="2" />
+																</div>
+																<div class="col-auto">
+																	<div class="m-2 md-6">
+																		<h:outputLabel value="$°$" class="text-center" />
+																	</div>
 																</div>
 															</div>
-														</div>
-														<div class="row">
-															<div class="col-auto">
-																<h:outputLabel value="$Fuerza: $"
-																	class="form-label m-2 text-right" />
-															</div>
-															<div class="col-auto">
-																<p:inputNumber value="#{fisicaBean.f2}"
-																	class="form-control" minValue="0" decimalPlaces = "2"/>
-															</div>
-															<div class="col-auto">
-																<div class="m-2 md-6">
-																	<h:outputLabel value="$N$" class="text-center" />
+															<div class="row m-2">
+																<div class="col-auto">
+																	<h:outputLabel value="$Fuerza: $"
+																		class="form-label m-2 text-right" />
+																</div>
+																<div class="col-auto">
+																	<p:inputNumber value="#{fisicaBean.f3}"
+																		class="form-control ui-inputtext" minValue="0"
+																		decimalPlaces="2" />
+																</div>
+																<div class="col-auto">
+																	<div class="m-2 md-6">
+																		<h:outputLabel value="$N$" class="text-center" />
+																	</div>
+																</div>
+																<div class="col-auto">
+																	<h:outputLabel value="$Angulo: $"
+																		class="form-label m-2 text-left" />
+																</div>
+																<div class="col-auto">
+																	<p:inputNumber value="#{fisicaBean.ang3}"
+																		class="form-control ui-inputtext" minValue="0"
+																		maxValue="360" decimalPlaces="2" />
+																</div>
+																<div class="col-auto">
+																	<div class="m-2 md-6">
+																		<h:outputLabel value="$°$" class="text-center" />
+																	</div>
 																</div>
 															</div>
-															<div class="col-auto">
-																<h:outputLabel value="$Angulo: $"
-																	class="form-label m-2 text-left" />
 															</div>
-															<div class="col-auto">
-																<p:inputNumber value="#{fisicaBean.ang2}"
-																	class="form-control" minValue="0"
-																	maxValue="360" decimalPlaces = "2" />
-															</div>
-															<div class="col-auto">
-																<div class="m-2 md-6">
-																	<h:outputLabel value="$°$" class="text-center" />
-																</div>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-auto">
-																<h:outputLabel value="$Fuerza: $"
-																	class="form-label m-2 text-right" />
-															</div>
-															<div class="col-auto">
-																<p:inputNumber value="#{fisicaBean.f3}"
-																	class="form-control" minValue="0" decimalPlaces = "2"/>
-															</div>
-															<div class="col-auto">
-																<div class="m-2 md-6">
-																	<h:outputLabel value="$N$" class="text-center" />
-																</div>
-															</div>
-															<div class="col-auto">
-																<h:outputLabel value="$Angulo: $"
-																	class="form-label m-2 text-left" />
-															</div>
-															<div class="col-auto">
-																<p:inputNumber value="#{fisicaBean.ang3}"
-																	class="form-control" minValue="0"
-																	maxValue="360" decimalPlaces = "2"/>
-															</div>
-															<div class="col-auto">
-																<div class="m-2 md-6">
-																	<h:outputLabel value="$°$" class="text-center" />
-																</div>
-															</div>
-														</div>
 													</h:panelGroup>
 													<div class="text-center m-3">
 														<p:growl id="growl" showDetail="true" />
