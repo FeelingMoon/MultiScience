@@ -81,17 +81,17 @@ public class FisicaElectrica {
 	}
 
 	public ArrayList<Object> calcularMagnev(String vx, String vy, String vz, String uv, String bx, String by, String bz,
-			String ub, String q, String uq, String ang) {
+			String ub, String q, String uq, String ang, String m) {
 		ArrayList<Object> tmp = new ArrayList<>();
-		mag = new MagnetismoDAO(vx, vy, vz, uv, bx, by, bz, ub, q, uq, ang);
+		mag = new MagnetismoDAO(vx, vy, vz, uv, bx, by, bz, ub, q, uq, ang, m);
 		tmp.add(mag.calcularFuerzaV());
 		return tmp;
 	}
 
 	public ArrayList<Object> calcularMagnem(String vx, String vy, String vz, String uv, String bx, String by, String bz,
-			String ub, String q, String uq, String ang) {
+			String ub, String q, String uq, String ang, String m) {
 		ArrayList<Object> tmp = new ArrayList<>();
-		mag = new MagnetismoDAO(vx, vy, vz, uv, bx, by, bz, ub, q, uq, ang);
+		mag = new MagnetismoDAO(vx, vy, vz, uv, bx, by, bz, ub, q, uq, ang, m);
 		tmp.add(mag.calcularFuerzaM());
 		return tmp;
 	}

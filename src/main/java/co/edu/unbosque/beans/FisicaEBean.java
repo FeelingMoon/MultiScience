@@ -29,7 +29,7 @@ public class FisicaEBean implements Serializable {
 	private String x4, y4;
 	private String x5, y5;
 	private String r1, r2, r3, r4, v;
-	private String vx, vy, vz, bx, by, bz, q, ang;
+	private String vx, vy, vz, bx, by, bz, q, ang, m;
 	private ScatterChartModel scatterModel;
 	private boolean scatter, img;
 	private FisicaElectrica fis;
@@ -109,14 +109,14 @@ public class FisicaEBean implements Serializable {
 				scatter = false;
 			}
 		} else if (valor.equals("magnev")) {
-			tmp = fis.calcularMagnev(vx, vy, vz, u2, bx, by, bz, u3, q, u1, "0");
+			tmp = fis.calcularMagnev(vx, vy, vz, u2, bx, by, bz, u3, q, u1, "0", m);
 			if (tmp != null) {
 				resultado = (String) tmp.get(0);
 				img = false;
 				scatter = false;
 			}
 		} else if (valor.equals("magnem")) {
-			tmp = fis.calcularMagnem(vx, vy, vz, u2, bx, by, bz, u3, q, u1, ang);
+			tmp = fis.calcularMagnem(vx, vy, vz, u2, bx, by, bz, u3, q, u1, ang, m);
 			if (tmp != null) {
 				resultado = (String) tmp.get(0);
 				img = false;
@@ -149,13 +149,14 @@ public class FisicaEBean implements Serializable {
 		y4 = null;
 		x5 = null;
 		y5 = null;
-		vx = null;
-		vy = null;
-		vz = null;
-		bx = null;
-		by = null;
-		bz = null;
-		q = null;
+		vx = "0";
+		vy = "0";
+		vz = "0";
+		bx = "0";
+		by = "0";
+		bz = "0";
+		q = "0";
+		m = null;
 	}
 
 	public void graficaScatterDefault() {
@@ -524,6 +525,14 @@ public class FisicaEBean implements Serializable {
 
 	public void setAng(String ang) {
 		this.ang = ang;
+	}
+
+	public String getM() {
+		return m;
+	}
+
+	public void setM(String m) {
+		this.m = m;
 	}
 
 }
