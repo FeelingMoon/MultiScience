@@ -60,13 +60,13 @@ public class MagnetismoDAO {
 					+ " $rad$ y el angulo entre $\\vec{B}$ y $\\vec{F}$ es " + angbf
 					+ " $rad$ y ademas, los siguientes datos:<br><ul class\"list-group\">"
 					+ "<li class\"list-group-item\">El vector de velocidad con componentes $" + vx + "\\hat{i} + (" + vy
-					+ ")\\hat{j} + (" + vz + ")\\hat{z} * 10^" + uv + "$ $m/s$, tiene una magnitud aproximada de " + mv
+					+ ")\\hat{j} + (" + vz + ")\\hat{k} * 10^" + uv + "$ $m/s$, tiene una magnitud aproximada de " + mv
 					+ " $m/s$ </li>" + "<li class\"list-group-item\">El vector de campo magnetico con componentes $"
-					+ bx + "\\hat{i} + (" + by + ")\\hat{j} + (" + bz + ")\\hat{z} * 10^" + ub
-					+ "$ $T$, tiene una magnitud aproximada de " + mb + " $m/s$ </li>"
+					+ bx + "\\hat{i} + (" + by + ")\\hat{j} + (" + bz + ")\\hat{k} * 10^" + ub
+					+ "$ $T$, tiene una magnitud aproximada de " + mb + " $T$ </li>"
 					+ "<li class\"list-group-item\">El vector de fuerza con componentes $" + fx + "\\hat{i} - (" + fy
-					+ ")\\hat{j} + (" + fz + ")\\hat{z}$ $N$, tiene una magnitud aproximada de " + mf
-					+ " $m/s$ </li></ul>";
+					+ ")\\hat{j} + (" + fz + ")\\hat{k}$ $N$, tiene una magnitud aproximada de " + mf
+					+ " $N$ </li></ul>";
 		} catch (Exception e) {
 			e.printStackTrace();
 			data = "Error al intentar calcular la fuerza con vectores";
