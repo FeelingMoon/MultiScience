@@ -17,7 +17,7 @@ import org.primefaces.model.charts.optionconfig.legend.Legend;
 import org.primefaces.model.charts.optionconfig.title.Title;
 
 public class ColasDAO implements IExperimentoMonteCarlo {
-
+	
 	private BarChartModel barModel;
 	private double[] promedio;
 

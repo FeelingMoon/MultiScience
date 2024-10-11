@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>MultiRed - Redes</title>
+	<link href="webjars/bootstrap/5.2.3/css/bootstrap.min.css"
+		rel="stylesheet" />
+	<link href="styles/Style.css" rel="stylesheet" />
+	<script src="scripts/mathquill.js"></script>
+	<link rel="stylesheet" href="styles/mathquill.css"></link>
+	<link rel="stylesheet" href="styles/Math.css"></link>
+	<link rel="stylesheet" href="styles/Fis.css"></link>
+	<link rel="stylesheet" href="styles/Red.css"></link>
+	<script type="text/javascript" src="scripts/load-mathjax.js"></script>
+</h:head>
+<h:body>
+	<div class="container mx-auto">
+		<div class="row d-flex aling-itmes-center">
+			<div class="col-md-12 mx-auto">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-16">
+							<div class="card m-3">
+								<p class="card-title m-2">Seleccione un calculo</p>
+								<h:form id="com">
+									<div class="form-group m-2 gridComboButton">
+										<p:selectOneMenu value="#{redesBean.valor}"
+											styleClass="form-control" class="form-control">
+											<f:selectItem itemValue="ipConMask" itemLabel="Calcular IPV4" />
+											<f:selectItem itemValue="ipConNumMask"
+												itemLabel="Calcular IPV4 con mascara en formato CIDR" />
+											<f:ajax render="descripcion" />
+											<f:ajax render="resultado" />
+											<p:ajax oncomplete="MathJax.typeset();" />
+										</p:selectOneMenu>
+										<div class="m-3">
+											<p:commandButton type="button" icon="pi pi-check"
+												styleClass="rounded-button"
+												onclick="PF('dlg').show();  MathJax.typeset();" id="bm" />
+										</div>
+									</div>
+								</h:form>
+								<p class="card-subtitle m-2 text-body-secondary">Descripcion</p>
+								<h:outputLabel escape="false" id="descripcion"
+									value="#{redesBean.descripcion}" class="m-2" />
+								<div class="text-center" id="descripcion">
+									<h:form>
+										<p:growl id="growl-sticky" for="sticky-key" showDetail="true"
+											sticky="true" />
+									</h:form>
+								</div>
+								<p:dialog id="dlg" header="Confirmacion" widgetVar="dlg"
+									modal="true" resizable="false" position="center center"
+									onShow="PF('dlg').initPosition();  MathJax.typeset();">
+									<div class="card m-4 dialog-content">
+										<h:panelGroup id="resultado">
+											<h:form>
+												<div class="m-4">
+													<h:outputLabel escape="false" value="#{redesBean.dialogo}" />
+												</div>
+												<div class="form-group">
+													<div class="text-center m-3">
+														<p:growl id="growl" showDetail="true" />
+														<h:panelGroup
+															rendered="#{redesBean.valor == 'ipConNumMask'}">
+															<div class="text-center p-3">
+																<div class="m-2">
+																	<h:outputLabel escape="false"
+																		value="Ingrese la IP y mascara:" />
+																</div>
+																<span class="ui-float-label"> <p:inputText
+																		id="input-ip" value="#{redesBean.ip}" required="true" />
+																	<p:outputLabel for="@previous" value="IP (X.X.X.X)" />
+																</span>
+																<h:outputLabel escape="false" value="/" />
+																<p:inputNumber id="input-mask"
+																	value="#{redesBean.numMask}" minValue="1" maxValue="31"
+																	decimalPlaces="0" required="true" />
+															</div>
+														</h:panelGroup>
+														<h:panelGroup rendered="#{redesBean.valor == 'ipConMask'}">
+															<div class="text-center p-3">
+																<p:panelGrid columns="2"
+																	styleClass="full-width custom-grid grid">
+																	<h:outputLabel value="IP"
+																		class="form-label m-2 text-left" />
+																	<p:inputText value="#{redesBean.ip}"
+																		class="form-control m-2 md-6 ui-inputtext"
+																		required="true" placeholder="XXX.XXX.XXX.XXX" />
+																	<h:outputLabel value="Mascara"
+																		class="form-label m-2 text-left" />
+																	<p:inputText value="#{redesBean.mask}"
+																		class="form-control m-2 md-6 ui-inputtext"
+																		required="true" placeholder="XXX.XXX.XXX.XXX" />
+																</p:panelGrid>
+															</div>
+														</h:panelGroup>
+														<p:commandButton class="m-2" value="Continuar"
+															icon="pi pi-check" iconPos="right"
+															action="#{redesBean.calcular}" update=":res growl"
+															oncomplete="PF('dlg').hide(); MathJax.typeset();" />
+													</div>
+												</div>
+											</h:form>
+										</h:panelGroup>
+									</div>
+								</p:dialog>
+							</div>
+						</div>
+					</div>
+					<div class="card m-4">
+						<h:form id="res">
+							<div class="m-4">
+								<h:outputLabel escape="false" value="#{redesBean.resultado}" />
+							</div>
+							<div class="p-3">
+								<h:panelGroup rendered="#{redesBean.ipCal}">
+									<div style="display: flex; justify-content: center;">
+										<p:panelGrid styleClass="showcase-text-align-center">
+											<f:facet name="header">
+												<p:column style="border:none;" colspan="3">
+													<strong>Resultado calculadora de IPV4:</strong>
+												</p:column>
+											</f:facet>
+											<p:row>
+												<p:column style="border:none;">
+													<strong>IP:</strong>
+												</p:column>
+												<p:column style="border:none;" colspan="2"> #{redesBean.resultados[10]}</p:column>
+											</p:row>
+											<p:row>
+												<p:column style="border:none;">
+													<strong>Mascara:</strong>
+												</p:column>
+												<p:column style="border:none;" colspan="2"> #{redesBean.resultados[11]}</p:column>
+											</p:row>
+											<p:row>
+												<p:column style="border:none;">
+													<strong>Mascara (CIDR):</strong>
+												</p:column>
+												<p:column style="border:none;" colspan="2"> #{redesBean.resultados[12]}</p:column>
+											</p:row>
+											<p:row>
+												<p:column style="border:none;">
+													<strong>IP de Red:</strong>
+												</p:column>
+												<p:column style="border:none;" colspan="2"> #{redesBean.resultados[0]}</p:column>
+											</p:row>
+											<p:row>
+												<p:column style="border:none;">
+													<strong>IP de Broadcast:</strong>
+												</p:column>
+												<p:column style="border:none;" colspan="2"> #{redesBean.resultados[1]}</p:column>
+											</p:row>
+											<p:row>
+												<p:column style="border:none;">
+													<strong>Cantidad de IP útiles o hosts:</strong>
+												</p:column>
+												<p:column style="border:none;" colspan="2"> #{redesBean.resultados[2]}</p:column>
+											</p:row>
+											<p:row>
+												<p:column style="border:none;">
+													<strong>Rango de IP utiles:</strong>
+												</p:column>
+												<p:column style="border:none;" colspan="2"> #{redesBean.resultados[3]}</p:column>
+											</p:row>
+											<p:row>
+												<p:column style="border:none;">
+													<strong>Clase de IP:</strong>
+												</p:column>
+												<p:column style="border:none;" colspan="2"> #{redesBean.resultados[4]}</p:column>
+											</p:row>
+											<p:row>
+												<p:column style="border:none;">
+													<strong>Mascara por defecto:</strong>
+												</p:column>
+												<p:column style="border:none;" colspan="2"> #{redesBean.resultados[8]}</p:column>
+											</p:row>
+											<p:row>
+												<p:column style="border:none;">
+													<strong>Mascara por defecto (CIDR):</strong>
+												</p:column>
+												<p:column style="border:none;" colspan="2"> #{redesBean.resultados[9]}</p:column>
+											</p:row>
+											<p:row>
+												<p:column style="border:none;">
+													<strong>IP publica o privada:</strong>
+												</p:column>
+												<p:column style="border:none;" colspan="2"> #{redesBean.resultados[5]}</p:column>
+											</p:row>
+											<p:row>
+												<p:column style="border:none;" colspan="3">
+													<strong>Porcion de red (rojo) y la porción de
+														hosts (verde) en binario:</strong>
+												</p:column>
+											</p:row>
+											<p:row>
+												<p:column style="border:none;" colspan="3">
+													<div class="text-center">
+														<p:outputLabel
+															style="background-color: #ff3232; color: black;"
+															value="#{redesBean.resultados[6]}" />
+														<p:outputLabel
+															style="background-color: #3eff32; color: black;"
+															value="#{redesBean.resultados[7]}" />
+													</div>
+												</p:column>
+											</p:row>
+										</p:panelGrid>
+									</div>
+								</h:panelGroup>
+							</div>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="fixed-top m-2">
+		<p:commandButton id="dynaButton" value="Menu" type="button"
+			icon="pi pi-bars" />
+		<p:menu overlay="true" trigger="dynaButton" my="left top"
+			at="left bottom">
+			<p:submenu label="MultiMath">
+				<p:menuitem value="Frecuencias" outcome="frecuencias.xhtml"
+					icon="pi pi-upload" />
+				<p:menuitem value="Experimentos" outcome="index.xhtml"
+					icon="pi pi-chart-bar" />
+				<p:menuitem value="Calculo" outcome="calculo.xhtml"
+					icon="pi pi-calculator" />
+			</p:submenu>
+			<p:submenu label="MultiFis">
+				<p:menuitem value="Fisica electrica" outcome="fisicaE.xhtml"
+					icon="pi pi-bolt" />
+				<p:menuitem value="Fisica mecanica" outcome="fisicaM.xhtml"
+					icon="pi pi-box" />
+			</p:submenu>
+			<p:submenu label="MultiRed">
+				<p:menuitem value="Redes" outcome="redes.xhtml" icon="pi pi-globe" />
+			</p:submenu>
+		</p:menu>
+	</div>
+</h:body>
+</html>

@@ -1,13 +1,10 @@
 package co.edu.unbosque.services;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
-
-import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -258,7 +255,7 @@ public class Datos {
 			} else {
 				fin = null;
 			}
-		} catch (EncryptedDocumentException | IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fin = null;
 		}
